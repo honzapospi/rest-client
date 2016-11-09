@@ -6,6 +6,8 @@
 
 namespace JP\RestClient;
 use JP\RestClient\Exceptions\AuthenticationException;
+use JP\RestClient\Exceptions\ForbiddenException;
+use JP\RestClient\Exceptions\NotFoundException;
 use JP\RestClient\Exceptions\RedirectionException;
 use JP\RestClient\Exceptions\ResponseStatusException;
 use Teze\Rest\Client\JsonParser;
@@ -53,9 +55,9 @@ class Rest extends \Nette\Object {
 		if($response->code == 401)
 			throw new AuthenticationException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
 		elseif($response->code == 403)
-			throw new AuthenticationException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
+			throw new ForbiddenException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
 		elseif($response->code == 404)
-			throw new AuthenticationException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
+			throw new NotFoundException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
 		else
 			throw new ResponseStatusException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '', $response->code);
 	}
