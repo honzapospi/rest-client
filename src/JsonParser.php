@@ -16,7 +16,9 @@ use Nette\Utils\ArrayHash;
 class JsonParser extends \Nette\Object implements IBodyParser {
 
 	public function parse($string){
-		return ArrayHash::from(json_decode($string, true));
+		$data = json_decode($string, true);
+		if($data)
+			return ArrayHash::from($data);
 	}
 
 }
