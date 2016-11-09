@@ -46,7 +46,7 @@ class Rest extends \Nette\Object {
 		if($response->code < 300)
 			return $response;
 		// 3xx
-		if($response < 400){
+		if($response->code < 400){
 			throw new RedirectionException('Endpoint "'.$endpoint.'" at URL "'.$this->url.'" is redirected to "'.$response->getHeader('Location').'"', $response->code);
 		}
 		// 4xx+
@@ -73,6 +73,10 @@ class Rest extends \Nette\Object {
 			$this->bar = new BarPanel($this->url);
 		}
 		return $this->bar;
+	}
+
+	public function setBar($bar){
+		$this->bar = $bar;
 	}
 
 	public function setSender(ISender $sender){
