@@ -9,7 +9,7 @@ use JP\RestClient\Exceptions\AuthenticationException;
 use JP\RestClient\Exceptions\RedirectionException;
 use JP\RestClient\Exceptions\ResponseStatusException;
 use Teze\Rest\Client\JsonParser;
-
+use Tracy\IBarPanel;
 /**
  * Rest
  * @author Jan Pospisil
@@ -75,7 +75,7 @@ class Rest extends \Nette\Object {
 		return $this->bar;
 	}
 
-	public function setBar($bar){
+	public function setBar(IBarPanel $bar){
 		$this->bar = $bar;
 	}
 
