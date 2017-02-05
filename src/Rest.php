@@ -6,6 +6,7 @@
 
 namespace JP\RestClient;
 use JP\RestClient\Exceptions\AuthenticationException;
+use JP\RestClient\Exceptions\BadRequestException;
 use JP\RestClient\Exceptions\ForbiddenException;
 use JP\RestClient\Exceptions\NotFoundException;
 use JP\RestClient\Exceptions\RedirectionException;
@@ -45,21 +46,43 @@ class Rest extends \Nette\Object {
 		$response = $this->getSender()->send($request);
 		$this->getBar()->add($request, $response);
 		// 2xx
-		if($response->code < 300)
+		if($response->code < 300){
 			return $response;
+		}
 		// 3xx
 		if($response->code < 400){
-			throw new RedirectionException('Endpoint "'.$endpoint.'" at URL "'.$this->url.'" is redirected to "'.$response->getHeader('Location').'"', $response->code);
+			$e = new RedirectionException('Endpoint "'.$endpoint.'" at URL "'.$this->url.'" is redirected to "'.$response->getHeader('Location').'"', $response->code);
+			$e->setRequest($request);
+			$e->setResponse($response);
+			throw $e;
 		}
-		// 4xx+
-		if($response->code == 401)
-			throw new AuthenticationException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
-		elseif($response->code == 403)
-			throw new ForbiddenException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
-		elseif($response->code == 404)
-			throw new NotFoundException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
-		else
-			throw new ResponseStatusException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '', $response->code);
+		// 4xx
+		if($response->code == 400){
+			$e = new BadRequestException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
+			$e->setRequest($request);
+			$e->setResponse($response);
+			throw $e;
+		} elseif($response->code == 401){
+			$e = new AuthenticationException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
+			$e->setRequest($request);
+			$e->setResponse($response);
+			throw $e;
+		} elseif($response->code == 403) {
+			$e = new ForbiddenException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
+			$e->setRequest($request);
+			$e->setResponse($response);
+			throw $e;
+		} elseif($response->code == 404){
+			$e = new NotFoundException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
+			$e->setRequest($request);
+			$e->setResponse($response);
+			throw $e;
+		} else {
+			$e = new ResponseStatusException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '', $response->code);
+			$e->setRequest($request);
+			$e->setResponse($response);
+			throw $e;
+		}
 	}
 
 	private function getSender(){
