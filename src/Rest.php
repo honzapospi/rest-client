@@ -13,6 +13,7 @@ use JP\RestClient\Exceptions\RedirectionException;
 use JP\RestClient\Exceptions\ResponseStatusException;
 use Teze\Rest\Client\JsonParser;
 use Tracy\IBarPanel;
+use Tracy\Debugger;
 /**
  * Rest
  * @author Jan Pospisil
@@ -78,10 +79,15 @@ class Rest extends \Nette\Object {
 			$e->setResponse($response);
 			throw $e;
 		} else {
-			$e = new ResponseStatusException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '', $response->code);
-			$e->setRequest($request);
-			$e->setResponse($response);
-			throw $e;
+			if(!Debugger::$productionMode && $response->getSource()){
+				echo $response->getSource();
+				die();
+			} else {
+				$e = new ResponseStatusException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '', $response->code);
+				$e->setRequest($request);
+				$e->setResponse($response);
+				throw $e;
+			}
 		}
 	}
 

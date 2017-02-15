@@ -20,12 +20,14 @@ class Response extends \Nette\Object {
 	private $body;
 	private $headers;
 	private $execTime;
+	private $source;
 
-	public function __construct($code, $body, array $headers, $execTime) {
+	public function __construct($code, $body, array $headers, $execTime, $source) {
 		$this->code = $code;
 		$this->headers = $headers;
 		$this->body = $body;
 		$this->execTime = $execTime;
+		$this->source = $source;
 	}
 
 	public function getHeaders(){
@@ -46,5 +48,9 @@ class Response extends \Nette\Object {
 
 	public function getExecTime(){
 		return $this->execTime;
+	}
+
+	public function getSource(){
+		return $this->source;
 	}
 }

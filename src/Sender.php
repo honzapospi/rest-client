@@ -85,7 +85,7 @@ class Sender extends \Nette\Object implements ISender {
 		}
 		$httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$body = trim($body);
-		return new Response($httpCode, $this->bodyParser ? $this->bodyParser->parse($body) : $body, $headersValues, $time);
+		return new Response($httpCode, $this->bodyParser ? $this->bodyParser->parse($body) : $body, $headersValues, $time, $body);
 	}
 
 	public function setBodyParser(IBodyParser $bodyParser){
