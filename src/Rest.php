@@ -32,6 +32,11 @@ class Rest extends \Nette\Object {
 	private $url;
 	private $queryDelimiter;
 	private $bar;
+	private $headers = array();
+
+	public function setHeader($name, $value){
+		$this->headers[$name] = $value;
+	}
 
 	public function setEndpointAsParameter($parameter){
 		$this->endpointParameter = $parameter;
@@ -43,6 +48,7 @@ class Rest extends \Nette\Object {
 	}
 
 	public function request($endpoint, array $params = array(), $method = self::GET, array $headers = array()){
+		$headers = array_merge($this->headers, $headers);
 		$request = new RestRequest($endpoint, $params, $method, $headers);
 		$response = $this->getSender()->send($request);
 		$this->getBar()->add($request, $response);
