@@ -33,6 +33,7 @@ class Rest extends \Nette\Object {
 	private $queryDelimiter;
 	private $bar;
 	private $headers = array();
+	public $onException = array();
 
 	public function setHeader($name, $value){
 		$this->headers[$name] = $value;
@@ -61,6 +62,7 @@ class Rest extends \Nette\Object {
 			$e = new RedirectionException('Endpoint "'.$endpoint.'" at URL "'.$this->url.'" is redirected to "'.$response->getHeader('Location').'"', $response->code);
 			$e->setRequest($request);
 			$e->setResponse($response);
+			$this->onException($this, $e);
 			throw $e;
 		}
 		// 4xx
@@ -68,21 +70,25 @@ class Rest extends \Nette\Object {
 			$e = new BadRequestException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
 			$e->setRequest($request);
 			$e->setResponse($response);
+			$this->onException($this, $e);
 			throw $e;
 		} elseif($response->code == 401){
 			$e = new AuthenticationException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
 			$e->setRequest($request);
 			$e->setResponse($response);
+			$this->onException($this, $e);
 			throw $e;
 		} elseif($response->code == 403) {
 			$e = new ForbiddenException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
 			$e->setRequest($request);
 			$e->setResponse($response);
+			$this->onException($this, $e);
 			throw $e;
 		} elseif($response->code == 404){
 			$e = new NotFoundException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '');
 			$e->setRequest($request);
 			$e->setResponse($response);
+			$this->onException($this, $e);
 			throw $e;
 		} else {
 			if(!Debugger::$productionMode && $response->getSource()){
@@ -92,6 +98,7 @@ class Rest extends \Nette\Object {
 				$e = new ResponseStatusException(isset($response->body['error']['message']) ? $response->body['error']['message'] : '', $response->code);
 				$e->setRequest($request);
 				$e->setResponse($response);
+				$this->onException($this, $e);
 				throw $e;
 			}
 		}

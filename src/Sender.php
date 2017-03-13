@@ -56,6 +56,9 @@ class Sender extends \Nette\Object implements ISender {
 				$url .= $this->queryDelimiter.http_build_query($restRequest->params, null, '&');
 			}
 		}
+		if($restRequest->method == Rest::DELETE){
+			$options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
+		}
 		$options[CURLOPT_URL] = $url;
 
 		// HEADERS

@@ -48,3 +48,7 @@ class RestRequest extends \Nette\Object {
 	}
 
 }
+
+class RestException extends \Exception {
+
+}
