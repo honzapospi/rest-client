@@ -46,8 +46,16 @@ class BarPanel extends \Nette\Object implements IBarPanel {
 	public function getPanel(){
 		$s = '';
 		foreach ($this->queries as $i => $query) {
+			$endpoint = $query->query;
+			$sep = preg_match('#\?#', $this->url) ? '&' : '?';
+			if($query->method == Rest::GET){
+				$endpoint = Html::el('a')
+					->setAttribute('href', $this->url.$query->query.$sep.http_build_query($query->data))
+					->setHtml($query->query)
+					->setAttribute('target', '_blank');
+			}
 			$s .= '<tr><td>' . number_format($query->time, 3).'</td>';
-			$s .= '<td>' . $query->query.'</td>';
+			$s .= '<td>' . $endpoint.'</td>';
 			$s .= '<td>' .$query->method.'</td>';
 			$s .= '<td>' .$query->code.'</td>';
 			$params = '';
@@ -59,9 +67,14 @@ class BarPanel extends \Nette\Object implements IBarPanel {
 			$s .= '</tr>';
 		}
 
+		$url = Html::el('a')
+			->setHtml($this->url)
+			->setAttribute('href', $this->url)
+			->setAttribute('target', '_blank');
+
 		return '
 			<h1>REST API</h1>
-			<h3>URL: '.$this->url.'</h3>
+			<h3>URL: '.$url.'</h3>
 			<div class="nette-inner">
 			<table>
 				<tr>
