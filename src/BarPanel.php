@@ -50,9 +50,11 @@ class BarPanel extends \Nette\Object implements IBarPanel {
 			$sep = preg_match('#\?#', $this->url) ? '&' : '?';
 			if($query->method == Rest::GET){
 				$endpoint = Html::el('a')
-					->setAttribute('href', $this->url.$query->query.$sep.http_build_query($query->data))
 					->setHtml($query->query)
-					->setAttribute('target', '_blank');
+					->addAttributes(array(
+						'href' => $this->url.$query->query.$sep.http_build_query($query->data),
+						'target' => '_blank'
+					));
 			}
 			$s .= '<tr><td>' . number_format($query->time, 3).'</td>';
 			$s .= '<td>' . $endpoint.'</td>';
@@ -69,8 +71,10 @@ class BarPanel extends \Nette\Object implements IBarPanel {
 
 		$url = Html::el('a')
 			->setHtml($this->url)
-			->setAttribute('href', $this->url)
-			->setAttribute('target', '_blank');
+			->addAttributes(array(
+				'href' => $this->url,
+				'target' => '_blank'
+			));
 
 		return '
 			<h1>REST API</h1>
