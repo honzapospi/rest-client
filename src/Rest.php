@@ -43,9 +43,9 @@ class Rest extends \Nette\Object {
 		$this->endpointParameter = $parameter;
 	}
 
-	public function __construct($url, $queryDelimiter = '?'){
+	public function __construct($url){
 		$this->url = $url;
-		$this->queryDelimiter = $queryDelimiter;
+		$this->queryDelimiter = preg_match('#\?#', $this->url) ? '&' : '?';
 	}
 
 	public function request($endpoint, array $params = array(), $method = self::GET, array $headers = array()){
