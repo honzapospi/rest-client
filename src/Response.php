@@ -11,6 +11,7 @@ namespace JP\RestClient;
  * @property string $body
  * @property int $code
  * @property array $headers
+ * @property float execTime
  * @author Jan Pospisil
  */
 

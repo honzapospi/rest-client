@@ -5,6 +5,7 @@
  */
 
 namespace JP\RestClient;
+use JP\RestClient\Exceptions\ConnectionException;
 use Teze\Rest\Client\BodyParser;
 use Tracy\Debugger;
 
@@ -87,6 +88,9 @@ class Sender extends \Nette\Object implements ISender {
 				$headersValues[trim($p[0])] = trim(substr($part, strlen($p[0]) + 1));
 		}
 		$httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		if($httpCode == 0){
+			throw new ConnectionException('No response');
+		}
 		$body = trim($body);
 		return new Response($httpCode, $this->bodyParser ? $this->bodyParser->parse($body) : $body, $headersValues, $time, $body);
 	}
