@@ -17,6 +17,7 @@ use Tracy\Debugger;
 /**
  * Rest
  * @author Jan Pospisil
+ * @property ISender $sender
  */
 
 class Rest extends \Nette\Object {
@@ -104,7 +105,10 @@ class Rest extends \Nette\Object {
 		}
 	}
 
-	private function getSender(){
+	/**
+	 * @return Sender
+	 */
+	public function getSender(){
 		if(!$this->sender){
 			$this->sender = new Sender($this->url, $this->endpointParameter, $this->queryDelimiter);
 			$this->sender->setBodyParser(new JsonParser());
