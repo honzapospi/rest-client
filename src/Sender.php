@@ -98,4 +98,19 @@ class Sender extends \Nette\Object implements ISender {
 	public function setBodyParser(IBodyParser $bodyParser){
 		$this->bodyParser = $bodyParser;
 	}
+
+	/**
+	 * @param array $options
+	 */
+	public function setOptions(array $options){
+		$this->options = $options;
+	}
+
+	/**
+	 * @param $name
+	 * @param $value
+	 */
+	public function addOption($name, $value){
+		$this->options[$name] = $value;
+	}
 }
