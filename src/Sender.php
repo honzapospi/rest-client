@@ -49,7 +49,7 @@ class Sender extends \Nette\Object implements ISender {
 
 		// PARAMETERS
 		if($restRequest->method == Rest::POST)
-			$options[CURLOPT_POSTFIELDS] = http_build_query($restRequest->params, null, '&');
+			$options[CURLOPT_POSTFIELDS] = $restRequest->params;
 		if($restRequest->method == Rest::GET && $restRequest->params){
 			if($this->sendEndpointAsParameter){
 				$url .= '&'.http_build_query($restRequest->params, null, '&');
