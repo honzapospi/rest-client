@@ -8,13 +8,15 @@ namespace JP\RestClient;
 use JP\RestClient\Exceptions\ConnectionException;
 use Teze\Rest\Client\BodyParser;
 use Tracy\Debugger;
+use Nette\SmartObject;
 
 /**
  * Sender
  * @author Jan Pospisil
  */
 
-class Sender extends \Nette\Object implements ISender {
+class Sender implements ISender {
+	use SmartObject;
 
 	public $options = array(
 		CURLOPT_CONNECTTIMEOUT => 10,

@@ -5,13 +5,15 @@
  */
 
 namespace JP\RestClient;
+use Nette\SmartObject;
 
 /**
  * Query
  * @author Jan Pospisil
  */
 
-class Query extends \Nette\Object {
+class Query {
+	use SmartObject;
 
 	public $query;
 	public $time;

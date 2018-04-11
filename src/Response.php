@@ -5,6 +5,7 @@
  */
 
 namespace JP\RestClient;
+use Nette\SmartObject;
 
 /**
  * Response
@@ -15,7 +16,8 @@ namespace JP\RestClient;
  * @author Jan Pospisil
  */
 
-class Response extends \Nette\Object {
+class Response {
+	use SmartObject;
 
 	private $code;
 	private $body;

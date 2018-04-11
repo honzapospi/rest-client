@@ -5,6 +5,7 @@
  */
 
 namespace JP\RestClient;
+use Nette\SmartObject;
 
 /**
  * HttpRequest
@@ -15,7 +16,8 @@ namespace JP\RestClient;
  * @author Jan Pospisil
  */
 
-class RestRequest extends \Nette\Object {
+class RestRequest {
+	use SmartObject;
 
 	private $endpoint;
 	private $params;

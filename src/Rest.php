@@ -14,13 +14,15 @@ use JP\RestClient\Exceptions\ResponseStatusException;
 use Teze\Rest\Client\JsonParser;
 use Tracy\IBarPanel;
 use Tracy\Debugger;
+use Nette\SmartObject;
 /**
  * Rest
  * @author Jan Pospisil
  * @property ISender $sender
  */
 
-class Rest extends \Nette\Object {
+class Rest {
+	use SmartObject;
 
 	const POST = 'POST';
 	const GET = 'GET';

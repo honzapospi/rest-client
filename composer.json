@@ -1,11 +1,7 @@
 {
   "name": "honzapospi/rest-client",
   "description": "PHP rest client.",
-  "license": [
-    "MIT",
-    "GPL-2.0",
-    "GNU-3.0"
-  ],
+  "license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
   "authors": [
     {
       "name": "Jan Pospisil",
@@ -18,7 +14,7 @@
     ]
   },
   "require": {
-    "php": ">= 5.4",
+    "php": ">= 7.0",
     "nette/application": "~2.4",
     "nette/di": "~2.4",
     "latte/latte": "^2.4",

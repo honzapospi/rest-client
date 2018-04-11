@@ -8,13 +8,15 @@ namespace JP\RestClient;
 use Nette\Utils\Html;
 use Tracy\Debugger;
 use Tracy\IBarPanel;
+use Nette\SmartObject;
 
 /**
  * BarPanel
  * @author Jan Pospisil
  */
 
-class BarPanel extends \Nette\Object implements IBarPanel {
+class BarPanel implements IBarPanel {
+	use SmartObject;
 
 	private $queries = array();
 	private $url;
