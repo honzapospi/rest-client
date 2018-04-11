@@ -12,7 +12,7 @@ use Nette\SmartObject;
  * @property string $body
  * @property int $code
  * @property array $headers
- * @property float execTime
+ * @property float $execTime
  * @author Jan Pospisil
  */
 
