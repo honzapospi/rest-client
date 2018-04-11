@@ -9,10 +9,10 @@ use Nette\SmartObject;
 
 /**
  * HttpRequest
- * @property $endpoint string
- * @property $params array
- * @property $method string
- * @property $headers array
+ * @property string $endpoint
+ * @property array $params
+ * @property string $method
+ * @property array $headers
  * @author Jan Pospisil
  */
 
